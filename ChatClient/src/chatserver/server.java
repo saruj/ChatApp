@@ -25,6 +25,7 @@ public class server extends javax.swing.JFrame
                 sock = clientSocket;
                 InputStreamReader isReader = new InputStreamReader(sock.getInputStream());
                 reader = new BufferedReader(isReader);
+                
             }
             catch (Exception ex) 
             {
@@ -264,13 +265,18 @@ public class server extends javax.swing.JFrame
 			
                         
                         String ipAddress = clientSock.getInetAddress().getHostName();
-                        String userName  = "AA";//System.getProperty("user.name");;
-                        
-                        Client c = new Client(userName, ipAddress, clientSock);
+                        String[] data; 
 
+                        BufferedReader input = new BufferedReader( new InputStreamReader( clientSock.getInputStream())) ;
+                        
+                        //String message  = input.readLine(); 
+                        //data = message.split(":");                    
+                        String userName  = "AA"; //data[0]; 
+                        Client c = new Client(userName, ipAddress, clientSock);
+                        
                         // Add the client to a HashMap
                         clients.put(userName, c);
-                       
+                         
                         
                         Thread listener = new Thread(new ClientHandler(clientSock, writer));
 			listener.start();
